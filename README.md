@@ -1,1 +1,103 @@
-# task-tracker
+# Task Tracker API
+
+A simple REST API for managing tasks, built with Spring Boot and Kotlin. This project demonstrates clean backend architecture with custom validation, automated testing, and containerized deployment.
+
+## Features
+
+- CRUD operations for tasks
+- Custom validation annotations (`@ValidTitle`, `@ValidDescription`)
+- Global exception handling with structured error responses
+- API documentation via Swagger / OpenAPI
+- Unit tests with MockK
+- Docker support with multi-stage builds
+- One-command deployment via Docker Compose
+
+## Tech Stack
+
+- **Language:** Kotlin
+- **Framework:** Spring Boot 4
+- **Database:** H2 (in-memory)
+- **Build Tool:** Gradle
+- **Testing:** JUnit 5, MockK
+- **API Docs:** SpringDoc OpenAPI
+- **Containerization:** Docker, Docker Compose
+
+## Getting Started
+
+### Prerequisites
+
+- JDK 17+
+- Docker (optional, for containerized run)
+
+### Run Locally with Gradle
+
+```bash
+./gradlew bootRun
+```
+
+The application will start on `http://localhost:8080`
+
+### Run with Docker Compose (recommended)
+
+```bash
+docker-compose up -d
+```
+
+This builds the image and starts the container in detached mode.
+
+To stop:
+
+```bash
+docker-compose down
+```
+
+## API Documentation
+
+Once the app is running, open Swagger UI in your browser:
+http://localhost:8080/swagger-ui/index.html
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/tasks` | Get all tasks |
+| GET | `/api/tasks/{id}` | Get task by ID |
+| GET | `/api/tasks/status/{status}` | Get tasks by status |
+| POST | `/api/tasks` | Create a new task |
+| PATCH | `/api/tasks/{id}/status` | Update task status |
+| DELETE | `/api/tasks/{id}` | Delete a task |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8080/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Learn Kotlin", "description": "Study coroutines"}'
+```
+
+## Running Tests
+
+```bash
+./gradlew test
+```
+
+## Project Structure
+src/main/kotlin/com/example/task_tracker/
+
+├── controller/      # REST endpoints
+
+├── service/         # Business logic
+
+├── repository/      # Data access layer
+
+├── model/           # JPA entities
+
+├── dto/             # Request/response objects
+
+├── validation/       # Custom validation annotations
+
+└── exception/       # Global exception handling
+
+## What I Learned
+
+This project was built as part of a daily challenge to strengthen Spring Boot, Kotlin, and DevOps fundamentals covering REST API design, custom validation, unit testing, and Docker based deployment.
