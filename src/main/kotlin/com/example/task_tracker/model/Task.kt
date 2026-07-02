@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.io.Serializable
 import java.time.LocalDateTime
 
 @Entity
@@ -28,4 +29,4 @@ class Task(
     var status: TaskStatus = TaskStatus.TODO,
 
     val createdAt: LocalDateTime = LocalDateTime.now()
-)
+) : Serializable
