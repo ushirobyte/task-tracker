@@ -2,6 +2,7 @@ package com.example.task_tracker.controller
 
 import com.example.task_tracker.model.Task
 import com.example.task_tracker.model.dto.TaskRequest
+import com.example.task_tracker.model.dto.UpdateStatusRequest
 import com.example.task_tracker.model.enum.TaskStatus
 import com.example.task_tracker.service.TaskService
 import jakarta.validation.Valid
@@ -39,8 +40,8 @@ class TaskController(
     @PatchMapping("/{id}/status")
     fun updateStatus(
         @PathVariable id: Long,
-        @RequestBody status: TaskStatus
-    ): Task = service.updateStatus(id, status)
+        @RequestBody req: UpdateStatusRequest
+    ): Task = service.updateStatus(id, req.status)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
