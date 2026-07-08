@@ -101,3 +101,17 @@ src/main/kotlin/com/example/task_tracker/
 ## What I Learned
 
 This project was built as part of a daily challenge to strengthen Spring Boot, Kotlin, and DevOps fundamentals covering REST API design, custom validation, unit testing, and Docker based deployment.
+
+## Caching
+
+This application uses Redis for two purposes:
+
+**Session Storage** — User sessions are stored in Redis via Spring Session.
+This allows sessions to survive application restarts and supports horizontal scaling.
+
+**Data Caching** — Frequently accessed tasks are cached using Spring Cache abstraction:
+- `@Cacheable` — returns data from Redis cache on repeated requests
+- `@CachePut` — updates cache when task status changes
+- `@CacheEvict` — removes cache entry when task is deleted
+
+Cache TTL: 10 minutes. Redis runs as a separate container via docker-compose.

@@ -2,7 +2,6 @@ package com.example.task_tracker.service
 
 import com.example.task_tracker.model.Task
 import com.example.task_tracker.model.dto.TaskRequest
-import com.example.task_tracker.model.dto.UpdateStatusRequest
 import com.example.task_tracker.model.enum.TaskStatus
 import com.example.task_tracker.repository.TaskRepository
 import com.example.task_tracker.service.kafka.TaskEventProducer
