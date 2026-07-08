@@ -3,6 +3,7 @@ package com.example.task_tracker.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -23,6 +24,9 @@ class SecurityConfig {
                     .anyRequest().authenticated()
             }
             .httpBasic { }
+            .sessionManagement { session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            }
         return http.build()
     }
 
