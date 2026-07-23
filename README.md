@@ -115,3 +115,32 @@ This allows sessions to survive application restarts and supports horizontal sca
 - `@CacheEvict` — removes cache entry when task is deleted
 
 Cache TTL: 10 minutes. Redis runs as a separate container via docker-compose.
+
+## Event-Driven Architecture
+
+This application uses Apache Kafka for asynchronous event processing.
+
+### Consumer Groups & Scaling
+
+Tasks events are published to the `task-events` topic with 3 partitions.
+Multiple application instances form a consumer group (`task-tracker-group`),
+where each partition is assigned to exactly one consumer. When an instance
+goes down, Kafka automatically rebalances partitions to remaining consumers.
+
+### Error Handling
+
+Failed message processing is handled with `@RetryableTopic`:
+
+- **Retry**: 3 attempts with exponential backoff
+- **Dead Letter Topic**: messages that fail all retries are sent to `task-events-dlt`
+
+This ensures no messages are lost, and problematic messages don't block
+processing of healthy ones.
+
+### Topics
+
+| Topic | Purpose |
+|-------|---------|
+| `task-events` | Main topic for task lifecycle events |
+| `task-events-retry` | Automatic retry queue |
+| `task-events-dlt` | Dead letter queue for failed messages |
