@@ -1,15 +1,18 @@
 package com.example.task_tracker.service.kafka
 
+import com.example.task_tracker.model.Task
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
+import tools.jackson.databind.ObjectMapper
 
 @Service
 class TaskEventProducer(
-    private val kafkaTemplate: KafkaTemplate<String, String>
+    private val kafkaTemplate: KafkaTemplate<String, String>,
+    private val objectMapper: ObjectMapper
 ) {
-    fun sendTaskCreatedEvent(taskId: Long, title: String) {
-        val message = "Task created: id=$taskId, title=$title"
-        kafkaTemplate.send("task-events", message)
-        println("Sent to Kafka: $message")
+    fun sendTaskCreatedEvent(task: Task) {
+        val json = objectMapper.writeValueAsString(task)
+        kafkaTemplate.send("task-events", task.id.toString(), json)
+        println("Sent to Kafka: $json")
     }
 }
