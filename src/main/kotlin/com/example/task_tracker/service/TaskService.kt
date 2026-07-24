@@ -33,7 +33,7 @@ class TaskService(
     @CachePut("tasks", key = "#result.id")
     fun create(req: TaskRequest): Task {
         val task = repo.save(Task(title = req.title, description = req.description))
-        eventProducer.sendTaskCreatedEvent(task.id ?: 0L, task.title)
+        eventProducer.sendTaskCreatedEvent(task)
         return task
     }
 
